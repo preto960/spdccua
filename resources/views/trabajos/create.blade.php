@@ -102,7 +102,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Enviar</button>
+        <button type="submit" class="btn btn-primary w-100">Crear Solicitud</button>
     </form>
 @endsection
 

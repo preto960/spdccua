@@ -88,7 +88,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+        <button type="submit" class="btn btn-primary w-100">Crear Empleado</button>
     </form>
 
 @endsection

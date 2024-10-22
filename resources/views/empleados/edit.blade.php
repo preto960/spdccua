@@ -88,7 +88,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+        <button type="submit" class="btn btn-primary w-100">Actualizar Empleado</button>
     </form>
 
 @endsection

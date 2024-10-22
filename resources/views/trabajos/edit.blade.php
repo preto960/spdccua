@@ -123,7 +123,7 @@
         
 
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <button type="submit" class="btn btn-primary">Actualizar Trabajo</button>
+            <button type="submit" class="btn btn-primary">Actualizar Solicitud</button>
             <a href="{{ route('trabajos.index') }}" class="btn btn-secondary">Cancelar</a>
         </div>
 

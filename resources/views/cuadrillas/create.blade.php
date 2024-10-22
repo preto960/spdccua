@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+        <button type="submit" class="btn btn-primary w-100">Crear Cuadrilla</button>
     </form>
 
 @endsection

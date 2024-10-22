@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100 mt-4">Guardar Cambios</button>
+        <button type="submit" class="btn btn-primary w-100 mt-4">Actualizar Cuadrilla</button>
     </form>
 @endsection
 
