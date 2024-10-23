@@ -94,29 +94,46 @@
 
         // Función para establecer una cookie
         function setCookie(name, value, days) {
-            const d = new Date();
-            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // La cookie expira en 'days' días
-            const expires = "expires=" + d.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            try {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // La cookie expira en 'days' días
+                const expires = "expires=" + d.toUTCString();
+                document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            } catch (e) {
+                console.warn("No se pudo establecer la cookie:", e);
+            }
         }
 
         // Función para obtener una cookie
         function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i].trim();
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            try {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i].trim();
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+            } catch (e) {
+                console.warn("No se pudo obtener la cookie:", e);
             }
             return null;
         }
 
-        // Función para obtener o generar un ID único para el dispositivo usando cookies
+        // Función para guardar el `device_id` en `localStorage` si las cookies fallan
         function getDeviceId() {
             let deviceId = getCookie('device_id');
             if (!deviceId) {
-                deviceId = 'device-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-                setCookie('device_id', deviceId, 365); // Guardar cookie por 1 año
+                // Intentar obtener desde `localStorage` como fallback
+                deviceId = localStorage.getItem('device_id');
+                if (!deviceId) {
+                    deviceId = 'device-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                    try {
+                        setCookie('device_id', deviceId, 365); // Guardar en cookie por 1 año
+                    } catch (e) {
+                        console.warn("No se pudo establecer la cookie, utilizando localStorage:", e);
+                    }
+                    localStorage.setItem('device_id', deviceId); // Guardar también en `localStorage`
+                }
             }
             return deviceId;
         }
@@ -162,6 +179,7 @@
 
         // Configurar un intervalo para enviar la ubicación cada 10 minutos (600,000 ms)
         setInterval(sendLocation, 600000);
+
 
     </script>
 
