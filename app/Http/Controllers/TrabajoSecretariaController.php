@@ -129,6 +129,8 @@ class TrabajoSecretariaController extends Controller
 
     public function g_ubi(Request $request)
     {
+        \Log::info('Datos recibidos:', $request->all());
+        
         $data = $request->validate([
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
