@@ -92,12 +92,31 @@
 
     <script>
 
-        // Función para obtener o generar un ID único para el dispositivo
+        // Función para establecer una cookie
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // La cookie expira en 'days' días
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        // Función para obtener una cookie
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i].trim();
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Función para obtener o generar un ID único para el dispositivo usando cookies
         function getDeviceId() {
-            let deviceId = localStorage.getItem('device_id');
+            let deviceId = getCookie('device_id');
             if (!deviceId) {
                 deviceId = 'device-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('device_id', deviceId);
+                setCookie('device_id', deviceId, 365); // Guardar cookie por 1 año
             }
             return deviceId;
         }
@@ -105,7 +124,7 @@
         // Función para enviar la ubicación al servidor
         function sendLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
+                navigator.geolocation.getCurrentPosition(function (position) {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     const device_id = getDeviceId();
@@ -130,11 +149,11 @@
                     .catch(error => {
                         console.error('Error al guardar:', error);
                     });
-                }, function(error) {
-                    console.error('Error al obtenerla:', error);
+                }, function (error) {
+                    console.error('Error al obtener la ubicación:', error);
                 });
             } else {
-                console.log("No es soportada por este navegador.");
+                console.log("La geolocalización no es soportada por este navegador.");
             }
         }
 
