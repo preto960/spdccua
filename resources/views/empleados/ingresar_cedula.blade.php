@@ -3,13 +3,6 @@
 @section('content')
     <h1 class="text-center mb-4">Ingresar Cédula</h1>
 
-    <!-- Mensajes de éxito -->
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <!-- Mensajes de error -->
     @if ($errors->any())
         <div class="alert alert-danger">

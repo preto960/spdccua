@@ -7,6 +7,7 @@ use App\Models\TrabajoSecretaria;
 use App\Models\ImagenesTrabajo;
 use App\Models\UserLocation;
 use Illuminate\Support\Facades\Storage;
+use App\Rules\ObsceneWords;
 
 class TrabajoSecretariaController extends Controller
 {
@@ -28,11 +29,11 @@ class TrabajoSecretariaController extends Controller
     {
         // Validación
         $validated = $request->validate([
-            'problema' => 'required|string|max:255',
-            'direccion' => 'required|string|max:255',
+            'problema' => ['required', 'string', 'max:255', new ObsceneWords],
+            'direccion' => ['required', 'string', 'max:255', new ObsceneWords],
             'eje' => 'required|integer|max:255',
             'estatus' => 'required|integer|in:1,2,3', // 1=activo, 2=resuelto, 3=no resuelto
-            'requerimiento' => 'required|string',
+            'requerimiento' => ['required', 'string', new ObsceneWords],
             'fotos' => 'required|array|min:1|max:5',
             'fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'fecha_desde' => 'nullable|date',  // Validación para fecha desde
@@ -76,11 +77,11 @@ class TrabajoSecretariaController extends Controller
     {
         // Validación
         $validated = $request->validate([
-            'problema' => 'required|string|max:255',
-            'direccion' => 'required|string|max:255',
+            'problema' => ['required', 'string', 'max:255', new ObsceneWords],
+            'direccion' => ['required', 'string', 'max:255', new ObsceneWords],
             'eje' => 'required|integer|max:255',
             'estatus' => 'required|integer|in:1,2,3', // 1=activo, 2=resuelto, 3=no resuelto
-            'requerimiento' => 'required|string',
+            'requerimiento' => ['required', 'string', new ObsceneWords],
             'fotos' => 'array|max:5',
             'fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'fecha_desde' => 'nullable|date',  // Validación para fecha desde

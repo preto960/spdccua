@@ -30,7 +30,7 @@
     <nav class="navbar navbar-light bg-white shadow-sm mb-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('dashboard') }}">SPDC - Cúa</a>
-            
+            @if(Auth::user())
             <div class="d-flex align-items-center">
 
                 <!-- Botón cerrar session -->
@@ -41,6 +41,7 @@
                     </button>
                 </form>
 
+                
                 <!-- Botón rápido para asistencia -->
                 <a href="{{ route('empleados.ingresar_cedula') }}" 
                 class="btn btn-primary btn-sm d-flex align-items-center justify-content-center me-2" 
@@ -70,6 +71,13 @@
                     </li>
                 </ul>
             </div>
+            @else
+            <div class="d-flex align-items-center">
+                <a href="{{ route('login') }}" class="btn btn-outline-default d-flex align-items-center justify-content-center me-2">
+                    Iniciar Sesión
+                </a>
+            </div>
+            @endif
         </div>
     </nav>
     
@@ -77,9 +85,9 @@
     
 
     <div class="container mt-5">    
-        @if (session('success'))
+        @if (session('register'))
             <div class="alert alert-success">
-                {{ session('success') }}
+                {{ session('register') }}
             </div>
         @endif
         @yield('content')
@@ -90,7 +98,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 
-    <script>
+    {{-- <script>
 
         // Función para establecer una cookie
         function setCookie(name, value, days) {
@@ -181,7 +189,7 @@
         setInterval(sendLocation, 600000);
 
 
-    </script>
+    </script> --}}
 
     @yield('script')
 </body>
