@@ -34,7 +34,7 @@ class LoginController extends Controller
                 'action_at' => now(),
             ]);
 
-            return redirect()->intended('dashboard');
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors(['email' => 'Credenciales incorrectas']);

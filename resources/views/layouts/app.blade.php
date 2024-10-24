@@ -36,8 +36,8 @@
                 <!-- Botón cerrar session -->
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn btn-outline-default d-flex align-items-center justify-content-center me-2" style="cursor: pointer;">
-                        Cerrar Session
+                    <button type="button" class="btn btn-outline-default d-flex align-items-center justify-content-center me-2" style="cursor: pointer;" id="logout-button" onclick="logout()">
+                        Cerrar Sesión
                     </button>
                 </form>
 
@@ -80,14 +80,11 @@
             @endif
         </div>
     </nav>
-    
-    
-    
-
+       
     <div class="container mt-5">    
-        @if (session('register'))
+        @if (session('success'))
             <div class="alert alert-success">
-                {{ session('register') }}
+                {{ session('success') }}
             </div>
         @endif
         @yield('content')
@@ -190,6 +187,23 @@
 
 
     </script> --}}
+    <script>
+        function disableButtons() {
+            const forms = document.querySelectorAll('form');
+
+            forms.forEach(form => {
+                const buttons = form.querySelectorAll('button[type="submit"], button[type="button"]');
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        button.disabled = true;
+                        form.submit();
+                    });
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', disableButtons);
+    </script>
 
     @yield('script')
 </body>
