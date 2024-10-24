@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('style')
+    <style>
+        .text-danger {
+            color: red !important;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0">Registrar Solicitud</h1>
@@ -68,7 +76,8 @@
 
         <div class="mb-3">
             <label for="requerimiento" class="form-label fw-bold">Requerimiento:</label>
-            <textarea id="requerimiento" name="requerimiento" class="form-control" rows="3" required>{{ old('requerimiento') }}</textarea>
+            <textarea id="requerimiento" name="requerimiento" class="form-control" rows="3" required oninput="updateCount()">{{ old('requerimiento') }}</textarea>
+            <small id="charCount" class="form-text ">0/250 caracteres</small>
             @error('requerimiento')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -95,5 +104,29 @@
                 this.value = '';
             }
         });
+    </script>
+
+    <script>
+        const maxChars = 250;
+
+        function updateCount() {
+            const textArea = document.getElementById('requerimiento');
+            const charCount = document.getElementById('charCount');
+            const currentLength = textArea.value.length;
+
+            charCount.textContent = `${currentLength}/${maxChars} caracteres`;
+
+            if (currentLength > maxChars) {
+                textArea.value = textArea.value.substring(0, maxChars); // Limitar el texto
+                charCount.textContent = `${maxChars}/${maxChars} caracteres`;
+            }
+
+            // Resaltar en rojo si excede el límite
+            if (currentLength > maxChars) {
+                charCount.classList.add('text-danger'); // Añadir clase que resalta en rojo
+            } else {
+                charCount.classList.remove('text-danger'); // Quitar clase
+            }
+        }
     </script>
 @endsection
