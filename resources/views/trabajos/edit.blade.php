@@ -23,68 +23,78 @@
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label for="problema" class="form-label fw-bold">Problema:</label>
-            <input type="text" class="form-control" id="problema" name="problema" value="{{ $trabajo->problema }}" required>
-            @error('problema')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="problema" class="form-label fw-bold">Problema:</label>
+                <input type="text" class="form-control" id="problema" name="problema" value="{{ $trabajo->problema }}" placeholder="Describe el problema" maxlength="100" required>
+                @error('problema')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-        <div class="mb-3">
-            <label for="fecha_desde" class="form-label fw-bold">Fecha Desde:</label>
-            <input type="date" id="fecha_desde" name="fecha_desde" class="form-control" value="{{ $trabajo->fecha_desde }}" required>
-            @error('fecha_desde')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+            <div class="col-md-6">
+                <label for="direccion" class="form-label fw-bold">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" value="{{ $trabajo->direccion }}" placeholder="Ingresa la dirección" maxlength="100" required>
+                @error('direccion')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
         
-        <div class="mb-3">
-            <label for="fecha_hasta" class="form-label fw-bold">Fecha Hasta:</label>
-            <input type="date" id="fecha_hasta" name="fecha_hasta" class="form-control" value="{{ $trabajo->fecha_hasta }}" required>
-            @error('fecha_hasta')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+        <div class="row mb-3">
+            
+            <div class="col-md-6">
+                <label for="fecha_desde" class="form-label fw-bold">Fecha Desde:</label>
+                <input type="date" id="fecha_desde" name="fecha_desde" class="form-control" value="{{ $trabajo->fecha_desde }}" required>
+                @error('fecha_desde')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="col-md-6">
+                <label for="fecha_hasta" class="form-label fw-bold">Fecha Hasta:</label>
+                <input type="date" id="fecha_hasta" name="fecha_hasta" class="form-control" value="{{ $trabajo->fecha_hasta }}" required>
+                @error('fecha_hasta')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
         </div>
 
-        <div class="mb-3">
-            <label for="direccion" class="form-label fw-bold">Dirección:</label>
-            <input type="text" class="form-control" id="direccion" name="direccion" value="{{ $trabajo->direccion }}" required>
-            @error('direccion')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="eje" class="form-label fw-bold">Eje:</label>
+                <select id="eje" name="eje" class="form-select" required>
+                    <option value="">Seleccione un eje</option>
+                    @for ($i = 1; $i <= 30; $i++)
+                        <option value="{{ $i }}" {{ old('eje') == $i || $i == $trabajo->eje ? 'selected' : '' }}>{{ $i }}</option>
+                    @endfor
+                </select>
+                @error('eje')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-        <div class="mb-3">
-            <label for="eje" class="form-label fw-bold">Eje:</label>
-            <select id="eje" name="eje" class="form-select" required>
-                <option value="">Seleccione un eje</option>
-                @for ($i = 1; $i <= 30; $i++)
-                    <option value="{{ $i }}" {{ old('eje') == $i || $i == $trabajo->eje ? 'selected' : '' }}>{{ $i }}</option>
-                @endfor
-            </select>
-            @error('eje')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="estatus" class="form-label fw-bold">Estado:</label>
-            <select class="form-select" id="estatus" name="estatus" required>
-                <option value="1" {{ $trabajo->estatus == 1 ? 'selected' : '' }}>Solicitud</option>
-                <option value="2" {{ $trabajo->estatus == 2 ? 'selected' : '' }}>Planificación</option>
-                <option value="3" {{ $trabajo->estatus == 3 ? 'selected' : '' }}>Ejecución</option>
-                <option value="3" {{ $trabajo->estatus == 4 ? 'selected' : '' }}>Realizado</option>
-                <option value="3" {{ $trabajo->estatus == 5 ? 'selected' : '' }}>En Espera</option>
-            </select>
-            @error('estatus')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+            <div class="col-md-6">
+                <label for="estatus" class="form-label fw-bold">Estado:</label>
+                <select class="form-select" id="estatus" name="estatus" required>
+                    <option value="1" {{ $trabajo->estatus == 1 ? 'selected' : '' }}>Solicitud</option>
+                    <option value="2" {{ $trabajo->estatus == 2 ? 'selected' : '' }}>Planificación</option>
+                    <option value="3" {{ $trabajo->estatus == 3 ? 'selected' : '' }}>Ejecución</option>
+                    <option value="3" {{ $trabajo->estatus == 4 ? 'selected' : '' }}>Realizado</option>
+                    <option value="3" {{ $trabajo->estatus == 5 ? 'selected' : '' }}>En Espera</option>
+                </select>
+                @error('estatus')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="requerimiento" class="form-label fw-bold">Requerimiento:</label>
-            <textarea class="form-control" id="requerimiento" name="requerimiento" rows="3" required>{{ $trabajo->requerimientos }}</textarea>
+            {{-- <textarea class="form-control" id="requerimiento" name="requerimiento" rows="3" required>{{ $trabajo->requerimientos }}</textarea> --}}
+            <textarea id="requerimiento" name="requerimiento" class="form-control" rows="3" placeholder="Describa el requerimiento" maxlength="400" required oninput="updateCount()">{{ $trabajo->requerimientos }}</textarea>
+                <small id="charCount" class="form-text">{{strlen($trabajo->requerimientos)}}/400 caracteres</small>
             @error('requerimiento')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -149,6 +159,27 @@
                 console.error('Error:', error);
                 alert('Hubo un problema al eliminar la imagen.');
             });
+        }
+    }
+
+    const maxChars = 400;
+
+    function updateCount() {
+        const textArea = document.getElementById('requerimiento');
+        const charCount = document.getElementById('charCount');
+        const currentLength = textArea.value.length;
+
+        charCount.textContent = `${currentLength}/${maxChars} caracteres`;
+
+        if (currentLength > maxChars) {
+            textArea.value = textArea.value.substring(0, maxChars);
+            charCount.textContent = `${maxChars}/${maxChars} caracteres`;
+        }
+
+        if (currentLength > maxChars) {
+            charCount.classList.add('text-danger');
+        } else {
+            charCount.classList.remove('text-danger');
         }
     }
 </script>
