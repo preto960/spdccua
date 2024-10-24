@@ -9,7 +9,7 @@ use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
     return view('solicitud');
-});
+})->name('index');
 Route::post('/solicitud/store', [TrabajoSecretariaController::class, 'store'])->name('solicitud.store');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
