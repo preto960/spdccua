@@ -29,7 +29,7 @@
     <!-- Menú de navegación -->{{--  navbar-expand-lg --}}
     <nav class="navbar navbar-light bg-white shadow-sm mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('/') }}">SPDC - Cúa</a>
+            <a class="navbar-brand" href="{{ route('index') }}">SPDC - Cúa</a>
             @if(Auth::user())
             <div class="d-flex align-items-center">
 
